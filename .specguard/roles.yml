@@ -1,0 +1,20 @@
+# Roles map names to GitHub logins. Alice is the architect; Bob and the AI agents
+# are contributors with no approval authority. The presence of this file switches
+# SpecGuard from advisory WARN mode into enforcing BLOCK mode.
+roles:
+  architect: [alice]
+
+rules:
+  # Nobody outside the architect role may edit the lock/roles/config themselves
+  # (deterministic hard block — no AI involved).
+  ".specguard/**":
+    edit: architect
+
+  # A scope change to the constitution or a feature spec needs the architect's
+  # approval to merge.
+  ".specify/memory/constitution.md":
+    scope_changes: {approve: architect}
+  "specs/**/*.md":
+    scope_changes: {approve: architect}
+  "README.md":
+    scope_changes: {approve: architect}

@@ -1,0 +1,11 @@
+# Which files SpecGuard governs. The Spec Kit constitution and feature specs are
+# the direction-defining docs here, so we watch them (plus the README).
+watch:
+  - "README.md"
+  - ".specify/memory/constitution.md"
+  - "specs/**/*.md"
+  - ".specguard/**"
+block_threshold: 0.75     # confidence a SCOPE_CHANGE needs to block; below it → warn
+on_error: warn            # classifier/vendor failure → pass with a loud warning
+provider: anthropic
+model: claude-sonnet-4-6
