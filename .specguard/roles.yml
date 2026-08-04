@@ -1,8 +1,9 @@
-# Roles map names to GitHub logins. Alice is the architect; Bob and the AI agents
-# are contributors with no approval authority. The presence of this file switches
-# SpecGuard from advisory WARN mode into enforcing BLOCK mode.
+# Roles map names to GitHub logins. Sawaiz-zip is the architect (the only role
+# that can approve a scope change); contributors and AI agents have no approval
+# authority. The presence of this file switches SpecGuard from advisory WARN mode
+# into enforcing BLOCK mode.
 roles:
-  architect: [alice]
+  architect: [Sawaiz-zip]
 
 rules:
   # Nobody outside the architect role may edit the lock/roles/config themselves

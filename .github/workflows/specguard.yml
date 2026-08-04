@@ -1,0 +1,60 @@
+name: specguard
+
+# Merge gate: SpecGuard classifies each PR's spec-file changes against the
+# locked project scope (derived from the Spec Kit constitution) and posts a
+# required check. Uses OpenRouter + the cheap model configured in
+# .specguard/config.yml.
+
+on:
+  pull_request:
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  # The required branch-protection check — exactly one check run named
+  # "specguard" per head commit (only pull_request runs produce it).
+  specguard:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # required: base...head history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install specguard (with the OpenAI SDK OpenRouter reuses)
+        run: pip install --quiet "specguard-ci[openai]"
+      - name: Run SpecGuard
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m specguard.ci
+
+  # An approval re-runs the original check in place, so a green verdict can
+  # replace the failed one on the same commit.
+  reevaluate:
+    if: github.event_name == 'pull_request_review' && github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      pull-requests: read
+    steps:
+      - name: Re-run SpecGuard for this PR head
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          run_id=$(gh api "repos/$REPO/actions/workflows/specguard.yml/runs?event=pull_request&head_sha=$HEAD_SHA" \
+                     --jq '.workflow_runs[0].id // empty')
+          if [ -n "$run_id" ]; then
+            gh api -X POST "repos/$REPO/actions/runs/$run_id/rerun"
+            echo "re-ran workflow run $run_id"
+          else
+            echo "no prior specguard run found for $HEAD_SHA — nothing to re-run"
+          fi

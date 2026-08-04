@@ -2,3 +2,4 @@ secrets.env
 audit*.json
 __pycache__/
 *.pyc
+.idea/
