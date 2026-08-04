@@ -5,6 +5,7 @@ watch:
   - ".specify/memory/constitution.md"
   - "specs/**/*.md"
   - ".specguard/**"
+  - "packages/**/README.md"      # monorepo: watch each package's README (watch is repo-root-only)
 block_threshold: 0.75     # confidence a SCOPE_CHANGE needs to block; below it → warn
 on_error: warn            # classifier/vendor failure → pass with a loud warning
 provider: openrouter
