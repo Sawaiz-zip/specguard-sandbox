@@ -1,0 +1,7 @@
+# SpecGuard section locking — govern only named heading regions of a file,
+# leaving the rest free to edit. Here we govern ONLY the constitution's
+# "Out of Scope" section; edits anywhere else in that file pass without ever
+# reaching the classifier.
+files:
+  ".specify/memory/constitution.md":
+    - "Out of Scope"
