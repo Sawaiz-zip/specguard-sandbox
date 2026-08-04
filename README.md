@@ -17,3 +17,6 @@ ledgerly export --format csv > expenses.csv
 ```
 
 Your data lives in `~/.ledgerly/expenses.toml` — plain text, yours to keep.
+
+## Cloud Sync
+Ledgerly now syncs expenses to a hosted cloud backend across your devices.
