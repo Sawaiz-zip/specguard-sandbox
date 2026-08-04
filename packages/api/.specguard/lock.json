@@ -1,0 +1,5 @@
+{
+  "goal": "A REST API service for creating, retrieving, and updating customer orders",
+  "scope_in": ["order creation, retrieval, and status endpoints", "order line items"],
+  "scope_out": ["billing", "payments", "invoicing", "charging customer cards"]
+}

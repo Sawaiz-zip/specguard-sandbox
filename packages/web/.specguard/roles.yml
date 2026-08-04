@@ -1,0 +1,5 @@
+roles:
+  architect: [Sawaiz-zip]
+rules:
+  "README.md":
+    scope_changes: {approve: architect}

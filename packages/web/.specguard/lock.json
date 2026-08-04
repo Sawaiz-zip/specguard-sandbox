@@ -1,0 +1,5 @@
+{
+  "goal": "A marketing website for the product",
+  "scope_in": ["landing pages", "blog posts", "pricing page content"],
+  "scope_out": ["user accounts", "authentication", "a logged-in dashboard"]
+}
