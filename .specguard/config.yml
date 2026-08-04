@@ -7,5 +7,5 @@ watch:
   - ".specguard/**"
 block_threshold: 0.75     # confidence a SCOPE_CHANGE needs to block; below it → warn
 on_error: warn            # classifier/vendor failure → pass with a loud warning
-provider: anthropic
-model: claude-sonnet-4-6
+provider: openrouter
+model: openai/gpt-4o-mini    # cheap model for testing; strong = anthropic/claude-sonnet-4.5
